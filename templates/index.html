@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>LinkedIn Profile Extractor</title>
+    <script>
+        async function startLogin() {
+            document.getElementById("result").innerText = "Logging in, please wait...";
+            try {
+                const response = await fetch("/login", { method: "POST" });
+                const data = await response.json();
+                if (data.success) {
+                    document.getElementById("result").innerText = `Profile URL: ${data.profile_url}`;
+                } else {
+                    document.getElementById("result").innerText = `Error: ${data.message || data.error}`;
+                }
+            } catch (error) {
+                document.getElementById("result").innerText = `Error: ${error.message}`;
+            }
+        }
+    </script>
+</head>
+<body>
+    <h1>LinkedIn Profile Extractor</h1>
+    <button onclick="startLogin()">Log in to LinkedIn</button>
+    <p id="result"></p>
+</body>
+</html>
